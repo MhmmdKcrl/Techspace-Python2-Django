@@ -1,0 +1,7 @@
+# postgresql
+python manage.py dumpdata > db.json
+python manage.py dumpdata --exclude auth.permission --exclude contenttypes > db.json
+
+# restore
+python manage.py loaddata db.json
+
