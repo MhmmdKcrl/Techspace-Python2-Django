@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "ckeditor_uploader",
 
     'social_django',
+    'rest_framework',
 
 ]
 

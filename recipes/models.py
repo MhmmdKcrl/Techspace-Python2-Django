@@ -67,6 +67,9 @@ class Recipe(Date):
 
     def get_absolute_url(self):
         return reverse_lazy("recipes:recipe_single_page", kwargs={"slug": self.slug})
+    
+    def author_fullname(self):
+        return f'{self.author.first_name} {self.author.last_name}'
         
 
 
