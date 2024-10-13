@@ -13,6 +13,7 @@ class RecipeList(ListView):
     template_name = 'recipes.html'
     model = Recipe
     context_object_name = 'recipes'
+    paginate_by = 1
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
