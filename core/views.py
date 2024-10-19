@@ -2,10 +2,18 @@ from django.shortcuts import render,  redirect
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
+from django.http import HttpResponse
 
 from django.views.generic import CreateView
 
 from core.forms import ContactForm
+from core.tasks import my_task, mail_to_subscribers
+
+def export(request):
+    # my_task.delay()
+    mail_to_subscribers.delay()
+    return HttpResponse("Exporting data...")
+
 
 def index(request):
     return render(request, "index.html")
