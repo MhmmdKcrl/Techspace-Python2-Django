@@ -21,10 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-57+t!wr)6aq45m%^y=-6!$w^z)8r^0(@5igj)qx83gl)ni%w!@"
+SECRET_KEY = "^y^d*h$2(!x0ni@wda$%tynee^u9+7j@v6vd+pd%r!&q+*k5et"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", default=1))
+PROD = not DEBUG
 
 ALLOWED_HOSTS = ["*"]
 
@@ -108,11 +109,11 @@ WSGI_APPLICATION = "food.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": 'py2_db',
-        "PASSWORD": '12345',
-        "USER": 'root',
-        "HOST": '127.0.0.1',
-        "PORT": 5432,
+        "NAME": os.environ.get('POSTGRES_DB', 'py2_db'),
+        "PASSWORD": os.environ.get('POSTGRES_PASSWORD', '12345'),
+        "USER": os.environ.get('POSTGRES_USER', 'root'),
+        "HOST":  os.environ.get('POSTGRES_HOST', 'postgres'),
+        "PORT": os.environ.get('POSTGRES_PORT', 5432),
     }
 }
 
@@ -175,11 +176,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = '/static/'
+
 if DEBUG:
-    STATICFILES_DIRS = [BASE_DIR / "static"]
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 else:
-    STATIC_DIR = BASE_DIR / "static"
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -215,8 +218,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'kocerlimehemmed2003@gmail.com'
-EMAIL_HOST_PASSWORD = 'dovz xxke jnlw vinq'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 AUTHENTICATION_BACKENDS = (
@@ -252,8 +255,8 @@ LOGOUT_URL = reverse_lazy('accounts:logout')
 LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')
 
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '...'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '...'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOGLE_OAUTH2_SECRET')
 
 
 
